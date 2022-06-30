@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_memory_game_app/constants.dart';
 import 'package:flutter_memory_game_app/game_settings.dart';
 import 'package:flutter_memory_game_app/models/game_option.dart';
@@ -49,5 +51,84 @@ abstract class GameControllerBase with Store {
       .map((option) => GameOption(option: option, matched: false, selected: false))
       .toList();
     gameCards.shuffle();
+  }
+
+  select(GameOption option, Function resetCard) async {
+    option.selected = true;
+    _cards.add(option);
+    _cardsCallBack.add(resetCard);
+    await _compareSelections();
+  }
+
+  _compareSelections() async {
+    if (completeGamePlay) {
+      if (_cards[0].option == _cards[1].option) { //Talvez precise corrigir a logica
+        _hits++;
+        _cards[0].matched = true;
+        _cards[1].matched = true;
+      } else {
+        await Future.delayed(const Duration(seconds: 1), () {
+          for (var i in [0, 1]) {
+            _cards[i].selected = false;
+            _cardsCallBack[i]();
+          }
+        });
+      }
+
+      _resetGamePlay();
+      _updateScore();
+      _checkGameResult();
+    }
+  }
+
+  _resetGamePlay() {
+    _cards = [];
+    _cardsCallBack = [];
+  }
+
+  _updateScore() {
+    _gameplay.mode == Mode.normal ? score++ : score --;
+  }
+
+  _checkGameResult() async {
+    bool allMatched = _hits == _pairsNumber;
+    if (_gameplay.mode == Mode.normal) {
+      await _checkResultNormalMode(allMatched);
+    } else {
+      await _checkResultVecnaMode(allMatched);
+    }
+  }
+
+  _checkResultNormalMode(bool allMatched) async{
+    await Future.delayed(const Duration(seconds: 1),
+    () => won = allMatched
+    );
+  }
+
+  _checkResultVecnaMode(bool allMatched) async {
+    if (isChanceDone()) {
+      await Future.delayed(const Duration(microseconds: 400), () => lost = true);
+    }
+    if (allMatched && score >= 0) {
+      await Future.delayed(const Duration(seconds: 1), () => won = allMatched);    }
+  }
+  
+  bool isChanceDone() {
+    return score < _pairsNumber - _hits;
+  }
+
+  restartGame() {
+    startGame(gamePlay: _gameplay);
+  }
+
+  nextLeve() {
+    int indexLevel = 0;
+
+    if (_gameplay.level != GameSettings.levels.last) {
+      indexLevel = GameSettings.levels.indexOf(_gameplay.level) + 1;
+    }
+
+    _gameplay.level = GameSettings.levels[indexLevel];
+    startGame(gamePlay: _gameplay);
   }   
 }

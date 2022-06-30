@@ -2,26 +2,26 @@ class GameSettings {
   static const levels = [6, 12, 16, 24, 30, 36, 42];
 
   static const cardOptions = [
-    "assets/images/characters/Argyle_S04.png",
-    "assets/images/characters/Dustin_Henderson_S04.png",
-    "assets/images/characters/Eddie_Munson_S04.png",
-    "assets/images/characters/Eleven_S04.png",
-    "assets/images/characters/Erica_Sinclair_S04.png",
-    "assets/images/characters/Jim_Hopper_S04.png",
-    "assets/images/characters/Jonathan_Byers_S04.png",
-    "assets/images/characters/Joyce_Byers_S04.png",
-    "assets/images/characters/Karen_Wheeler_S04.png",
-    "assets/images/characters/Lucas_Sinclair_S04.png",
-    "assets/images/characters/Martin_Brenner_S04.png",
-    "assets/images/characters/Max_Mayfield_S04.png",
-    "assets/images/characters/Mike_Wheeler_S04.png",
-    "assets/images/characters/Murray_Bauman_S04.png",
-    "assets/images/characters/Nancy_Wheeler_S04.png",
-    "assets/images/characters/Robin_Buckley_S04.png",
-    "assets/images/characters/Sam_Owens_S04.png",
-    "assets/images/characters/Steve_Harrington_S04.png",
-    "assets/images/characters/Vecna_S04.png",
-    "assets/images/characters/Will_Byers_S04.png"
+    "Argyle",
+    "Dustin_Henderson",
+    "Eddie_Munson",
+    "Eleven",
+    "Erica_Sinclair",
+    "Jim_Hopper",
+    "Jonathan_Byers",
+    "Joyce_Byers",
+    "Karen_Wheeler",
+    "Lucas_Sinclair",
+    "Martin_Brenner",
+    "Max_Mayfield",
+    "Mike_Wheeler",
+    "Murray_Bauman",
+    "Nancy_Wheeler",
+    "Robin_Buckley",
+    "Sam_Owens",
+    "Steve_Harrington",
+    "Vecna",
+    "Will_Byers"
   ];
 
   static gameBoardAxisCount(int level) {

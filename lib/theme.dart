@@ -39,7 +39,6 @@ class StrangerThingsTheme {
     scaffoldBackgroundColor: background,
     primarySwatch: color,
     primaryColor: color,
-    //textTheme: TODO
     fontFamily: 'Benguiat',
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: outlineButtonStyle(),

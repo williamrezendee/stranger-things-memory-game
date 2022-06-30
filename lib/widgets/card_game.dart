@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_memory_game_app/constants.dart';
+import 'package:flutter_memory_game_app/controllers/game_controller.dart';
 import 'package:flutter_memory_game_app/models/game_option.dart';
 import 'package:flutter_memory_game_app/theme.dart';
+import 'package:provider/provider.dart';
 
 class CardGame extends StatefulWidget {
   final Mode mode;
@@ -38,12 +40,25 @@ class _CardGameState extends State<CardGame> with SingleTickerProviderStateMixin
   }
 
   flipCard() {
-    animation.forward();
+    final game = context.read<GameController>();
+    if (
+      !animation.isAnimating &&
+      !widget.gameOption.matched &&
+      !widget.gameOption.selected &&
+      !game.completeGamePlay
+      ) {
+        animation.forward();
+        game.select(widget.gameOption, resetCard);
+    }
+  }
+
+  resetCard() {
+    animation.reverse();
   }
 
   AssetImage getImage(double angle) {
     if (angle > 0.5 * pi) {
-      return AssetImage(widget.gameOption.option);
+      return AssetImage('assets/images/characters/${widget.gameOption.option.toString()}_S04.png');
     } else {
       return widget.mode == Mode.normal
         ? const AssetImage('assets/images/Stranger-Things-Normal-Card.png')
